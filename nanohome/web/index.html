@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nanoHome — one window for every nano app</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">🏠</div>
+    <div>
+      <div class="brand-name">nanoHome</div>
+      <div class="brand-sub">One window for every nano app on this computer</div>
+    </div>
+  </div>
+  <div class="grow"></div>
+  <span class="pill" id="countPill">looking…</span>
+  <button class="btn ghost small" id="scanBtn">Look again</button>
+  <button class="btn ghost small" id="stopAllBtn">Stop everything</button>
+  <button class="btn ghost small" id="settingsBtn">⚙︎</button>
+</header>
+
+<main id="main" style="padding-top:22px">
+
+  <section class="card highlight">
+    <div class="label">What this is</div>
+    <h2 id="headline">Looking for the apps on this computer…</h2>
+    <p class="lead" id="sentence"></p>
+    <p class="muted">Each app below runs on this computer only. nanoHome starts them for you,
+      opens the right page, and stops them again when you are finished — no terminal, no
+      addresses to remember. Nothing is installed and nothing is sent anywhere.</p>
+  </section>
+
+  <section class="guide card" id="guideCard">
+    <div>
+      <div class="label">Not sure what you need?</div>
+      <h3 style="margin:4px 0 0">Answer two questions and it will tell you which app to use</h3>
+    </div>
+    <div class="questions" id="questions"></div>
+    <div class="row">
+      <button class="btn primary" id="guideBtn">Which app do I need?</button>
+    </div>
+    <div class="answer-card" id="answerCard" hidden>
+      <div class="big" id="answerName"></div>
+      <p id="answerWhy"></p>
+      <div class="row">
+        <button class="btn primary" id="answerStartBtn">Start it</button>
+        <button class="btn ghost" id="answerCloseBtn">Hide</button>
+      </div>
+    </div>
+  </section>
+
+  <h3 style="margin:26px 0 12px; color:var(--muted)">The apps</h3>
+  <section class="app-grid" id="appGrid"></section>
+
+  <div class="two-col" style="margin-top:22px">
+    <div class="card">
+      <h3>Projects with no window of their own</h3>
+      <p class="muted">These are real and useful, but they run in a terminal and take their
+        time. nanoHome cannot start them for you — it can only point at them.</p>
+      <div class="sample-list" id="companionList"></div>
+    </div>
+    <div class="card">
+      <h3>Where nanoHome looked</h3>
+      <p class="muted">If an app is missing, add the folder you keep it in.</p>
+      <div class="sample-list" id="searchedList"></div>
+      <div class="row" style="margin-top:14px">
+        <div class="field">
+          <label for="folderInput">Add a folder to look in</label>
+          <input type="text" id="folderInput" placeholder="C:\Users\me\Projects">
+        </div>
+        <button class="btn" id="addFolderBtn">Add it</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="backdrop" id="settingsModal">
+  <div class="modal">
+    <div class="modal-head"><h2>Settings</h2>
+      <button class="btn ghost small" data-close="settingsModal">✕</button></div>
+    <div class="modal-body">
+      <div class="group">
+        <h3>Behaviour</h3>
+        <label class="switch"><input type="checkbox" id="stopOnExit">
+          Stop the apps I started when nanoHome closes</label>
+        <p class="help">Leaving them running means you can close this window and keep working.
+          Stopping them means no stray processes and no occupied ports.</p>
+      </div>
+      <div class="group">
+        <h3>This computer</h3>
+        <p class="help" id="machineInfo">…</p>
+      </div>
+      <div class="group">
+        <h3>Folders being searched</h3>
+        <div class="sample-list" id="searchedList2"></div>
+      </div>
+      <div class="group">
+        <h3>Every nano project</h3>
+        <p class="help" id="siblingsInfo">…</p>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn primary" data-close="settingsModal">Close</button></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="/app.js"></script>
+</body>
+</html>
