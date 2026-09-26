@@ -5,7 +5,7 @@
 **One window for every nano app on this computer.** It finds them, explains
 them, and starts them for you.
 
-There are seven apps in this family, each in its own folder, each started a
+There are eleven apps in this family, each in its own folder, each started a
 different way. That is fine for the person who wrote them and hopeless for
 everybody else. nanoHome is the missing front door: it goes looking, shows one
 card per app explaining what it is *for*, and starts the one you press.
