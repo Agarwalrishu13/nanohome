@@ -18,6 +18,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest import mock
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -523,7 +524,19 @@ class TestApi(ServerCase):
             self.assertIn("folder", item)
 
     def test_it_found_the_apps_that_are_really_here(self):
-        """This repository sits next to nanowrap and nanosay, so those must be found."""
+        """Real discovery, end to end: two real-looking apps are built, the
+        server is pointed at their folder, and they must be found — on any
+        machine, not just wherever the family happens to live."""
+        tree = Path(tempfile.mkdtemp(prefix="nanohome-real-"))
+        home = tempfile.mkdtemp(prefix="nanohome-home-")
+        make_app_tree(tree, "nanowrap", "nanowrap")
+        make_app_tree(tree, "nanosay", "nanosay")
+        env = mock.patch.dict(os.environ, {"NANOHOME_HOME": home})
+        env.start()
+        self.addCleanup(env.stop)
+        self.addCleanup(shutil.rmtree, tree, ignore_errors=True)
+        self.addCleanup(shutil.rmtree, home, ignore_errors=True)
+        store.save_settings({"search_folders": [str(tree)]})
         state = self.get("/api/state")
         found = {item["id"] for item in state["apps"] if item["found"]}
         self.assertIn("nanowrap", found)
